@@ -1,8 +1,8 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, {FC} from 'react';
+import MainNav from './src/navigation/mainNav';
 
-const App = () => {
-  return <Text>Hello World</Text>;
+const App: FC = () => {
+  return <MainNav />;
 };
 
 export default App;
