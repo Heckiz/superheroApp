@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Text} from 'react-native';
 
-const Home = () => {
+const Home: FC = () => {
   return <Text>Home</Text>;
 };
 
