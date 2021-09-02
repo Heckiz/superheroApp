@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
-import {Text} from 'react-native';
+import Superheros from '../../components/Superheros';
 
 const Home: FC = () => {
-  return <Text>Home</Text>;
+  return <Superheros />;
 };
 
 export default Home;
