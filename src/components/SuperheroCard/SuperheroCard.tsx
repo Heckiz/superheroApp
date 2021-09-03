@@ -4,7 +4,6 @@ import {Result} from '../../interfaces/superheros';
 import PowerStats from './PowerStats/PowerStats';
 
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
-  console.log(character);
   return (
     <View style={styles.container}>
       <View
