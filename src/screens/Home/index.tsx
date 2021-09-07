@@ -1,25 +1,29 @@
-import React, {FC} from 'react';
-import {TextInput, FlatList, TouchableOpacity, Text} from 'react-native';
+import React, {FC, useState} from 'react';
+import {FlatList, TouchableOpacity, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {fetchSuperheros} from '../../app/superheroSlice';
+import {useAppSelector} from '../../app/hooks';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import SuperherCard from '../../components/SuperheroCard/SuperheroCard';
 import {Props} from '../../navigation/types';
 import styles from './styles';
 
 const Home: FC<Props> = ({navigation}) => {
-  const dispatch = useAppDispatch();
-
-  const {superheros} = useAppSelector(state => state.superheros);
-  console.log(superheros);
+  const [searching, setSearching] = useState<boolean>(false);
+  const {superheros, loading, error} = useAppSelector(
+    state => state.superheros,
+  );
+  console.log('data:', superheros, 'loading:', loading, 'error:', error);
   return (
     <>
       <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          placeholder="Search Superhero"
-          onChangeText={text => dispatch(fetchSuperheros(`search/${text}`))}
-        />
+        <TouchableOpacity style={styles.searchBar}>
+          <SearchBar
+            placeholder="Search Superhero"
+            setSearching={setSearching}
+          />
+        </TouchableOpacity>
+
+        {searching && <Text>searching...</Text>}
         <FlatList
           data={superheros}
           renderItem={({item}) => <SuperherCard character={item} />}
