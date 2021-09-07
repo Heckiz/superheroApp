@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import SuperherCard from '../../components/SuperheroCard/SuperheroCard';
 import {Props} from '../../navigation/types';
 import styles from './styles';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Home: FC<Props> = ({navigation}) => {
   const [searching, setSearching] = useState<boolean>(false);
@@ -17,10 +18,13 @@ const Home: FC<Props> = ({navigation}) => {
     <>
       <SafeAreaView>
         <TouchableOpacity style={styles.searchBar}>
+          <Icon name="search1" size={28} color="white" />
+
           <SearchBar
             placeholder="Search Superhero"
             setSearching={setSearching}
           />
+          {loading && <Icon name="loading1" size={28} color="white" />}
         </TouchableOpacity>
 
         {searching && <Text>searching...</Text>}

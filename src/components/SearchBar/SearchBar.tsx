@@ -33,8 +33,12 @@ const SearchBar: FC<{
 const styles = StyleSheet.create({
   input: {
     height: 50,
+    width: '80%',
+    paddingHorizontal: 10,
     color: 'white',
     fontSize: 20,
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
 });
 
