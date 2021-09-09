@@ -1,8 +1,8 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
-export type RootStackParamList = {
+export type RootTabParamList = {
   Home: undefined;
-  Teams: undefined;
+  SearchSuperhero: undefined;
 };
 
-export type Props = NativeStackScreenProps<RootStackParamList, 'Teams'>;
+export type Props = BottomTabScreenProps<RootTabParamList, 'SearchSuperhero'>;
