@@ -13,6 +13,7 @@ import {useAppDispatch} from '../../app/hooks';
 import {closeModal} from '../../app/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import Icon from 'react-native-vector-icons/AntDesign';
+import CharacterProfile from '../CharacterProfile/CharacterProfile';
 
 const DetailModal: FC<{modalVisible: boolean; character: Result | null}> = ({
   modalVisible,
@@ -39,8 +40,12 @@ const DetailModal: FC<{modalVisible: boolean; character: Result | null}> = ({
         />
 
         <Pressable onPress={() => dispatch(closeModal())}>
-          <Image style={styles.picture} source={{uri: character?.image.url}} />
-          <Text style={styles.nameTitle}>{character?.name}</Text>
+          <CharacterProfile
+            uri={character?.image.url}
+            name={character?.name}
+            width={250}
+            height={250}
+          />
         </Pressable>
 
         <ScrollView style={styles.dataContainer}>
@@ -85,28 +90,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-  },
-  picture: {
-    top: 10,
-    width: 230,
-    height: 230,
-    borderRadius: 5,
-    zIndex: 1,
-    alignItems: 'center',
-  },
-  nameTitle: {
-    width: 230,
-
-    bottom: 10,
-    fontSize: 28,
-    fontFamily: 'monospace',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: 'white',
-    padding: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    zIndex: 2,
   },
   dataContainer: {
     width: '100%',
