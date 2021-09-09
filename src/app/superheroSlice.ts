@@ -6,6 +6,7 @@ import {AppDispatch, RootState} from './store';
 interface DataState {
   superheros: Result[];
   randomSuperheros: Result[];
+  modal: {visible: boolean; character: Result | null};
   loading: boolean;
   error: boolean;
 }
@@ -13,6 +14,7 @@ interface DataState {
 const initialState: DataState = {
   superheros: [],
   randomSuperheros: [],
+  modal: {visible: false, character: null},
   loading: false,
   error: true,
 };
@@ -28,9 +30,8 @@ export const fetchSuperheros = createAsyncThunk<
   if (params.startsWith('search/')) {
     return data.results;
   } else {
-    getState().superheros.randomSuperheros.length === 5
-      ? dispatch(restartRandomSuperheros()) &&
-        dispatch(addRandomSuperheros(data))
+    getState().superheros.randomSuperheros.length === 6
+      ? dispatch(cleanRandomSuperheros()) && dispatch(addRandomSuperheros(data))
       : dispatch(addRandomSuperheros(data));
     return data;
   }
@@ -41,10 +42,18 @@ const superheroSlice = createSlice({
   initialState: initialState,
   reducers: {
     addRandomSuperheros(state, action: PayloadAction<Result>) {
-      state.randomSuperheros.push(action.payload);
+      state.randomSuperheros.unshift(action.payload);
     },
-    restartRandomSuperheros(state) {
-      state.randomSuperheros = [];
+    cleanRandomSuperheros(state) {
+      state.randomSuperheros.pop();
+    },
+    openModal(state, action: PayloadAction<Result>) {
+      state.modal.visible = true;
+      state.modal.character = action.payload;
+    },
+    closeModal(state) {
+      state.modal.visible = false;
+      state.modal.character = null;
     },
   },
   extraReducers: builder => {
@@ -67,6 +76,10 @@ const superheroSlice = createSlice({
   },
 });
 
-export const {addRandomSuperheros, restartRandomSuperheros} =
-  superheroSlice.actions;
+export const {
+  addRandomSuperheros,
+  cleanRandomSuperheros,
+  openModal,
+  closeModal,
+} = superheroSlice.actions;
 export default superheroSlice.reducer;

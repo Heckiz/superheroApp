@@ -7,10 +7,11 @@ import {Props} from '../../navigation/types';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import RandomList from '../../components/RandomList/RandomList';
+import DetailModal from '../../components/DetailModal/DetailModal';
 
 const Home: FC<Props> = ({navigation}) => {
   const [searching, setSearching] = useState<boolean>(false);
-  const {superheros, loading, error} = useAppSelector(
+  const {superheros, loading, error, modal} = useAppSelector(
     state => state.superheros,
   );
   console.log('data:', superheros, 'loading:', loading, 'error:', error);
@@ -32,7 +33,7 @@ const Home: FC<Props> = ({navigation}) => {
           keyExtractor={item => item.id}
         />
       )}
-
+      <DetailModal modalVisible={modal.visible} character={modal.character} />
       <TouchableOpacity
         style={styles.teamsButton}
         onPress={() => navigation.navigate('Teams')}>

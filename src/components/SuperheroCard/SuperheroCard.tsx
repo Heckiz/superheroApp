@@ -1,11 +1,17 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {useAppDispatch} from '../../app/hooks';
+import {openModal} from '../../app/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import PowerStats from './PowerStats/PowerStats';
 
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
+  const dispatch = useAppDispatch();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => dispatch(openModal(character))}>
       <View
         style={[
           styles.profile,
@@ -20,7 +26,7 @@ const SuperheroCard: FC<{character: Result}> = ({character}) => {
       <View style={styles.info}>
         <PowerStats powerstats={character.powerstats} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
