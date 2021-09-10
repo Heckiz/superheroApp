@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
-import {useAppSelector} from '../../app/hooks';
+import {useAppSelector} from '../../app/helpers';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SuperherCard from '../../components/SuperheroCard/SuperheroCard';
 import styles from './styles';
@@ -10,10 +10,9 @@ import DetailModal from '../../components/DetailModal/DetailModal';
 
 const SearchSuperhero: FC = () => {
   const [searching, setSearching] = useState<boolean>(false);
-  const {superheros, loading, error, modal} = useAppSelector(
+  const {superheros, loading, modal} = useAppSelector(
     state => state.superheros,
   );
-  console.log('data:', superheros, 'loading:', loading, 'error:', error);
   return (
     <>
       <TouchableOpacity style={styles.searchBar}>

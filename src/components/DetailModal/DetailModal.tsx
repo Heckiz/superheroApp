@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {useAppDispatch} from '../../app/hooks';
+import {useAppDispatch} from '../../app/helpers';
 import {closeModal} from '../../app/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -53,23 +53,25 @@ const DetailModal: FC<{modalVisible: boolean; character: Result | null}> = ({
 
         <ScrollView style={styles.dataContainer}>
           {character != null ? (
-            Object.entries(character.biography).map(([key, value], index) => (
-              <View key={index} style={styles.biography}>
-                <Text style={styles.textKey}>{key.replace('-', ' ')}: </Text>
+            Object.entries(character.biography).map(
+              ([key, value], indexContent: number) => (
+                <View key={indexContent} style={styles.biography}>
+                  <Text style={styles.textKey}>{key.replace('-', ' ')}: </Text>
 
-                {key === 'aliases' ? (
-                  <View style={styles.textValue}>
-                    {value.map((alias: string) => (
-                      <Text style={styles.textValue}>
-                        {alias === '-' ? alias : `"${alias}"`}{' '}
-                      </Text>
-                    ))}
-                  </View>
-                ) : (
-                  <Text style={styles.textValue}>{value}</Text>
-                )}
-              </View>
-            ))
+                  {key === 'aliases' ? (
+                    <View style={styles.textValue}>
+                      {value.map((alias: string, indexText: number) => (
+                        <Text key={indexText} style={styles.textValue}>
+                          {alias === '-' ? alias : `"${alias}"`}{' '}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : (
+                    <Text style={styles.textValue}>{value}</Text>
+                  )}
+                </View>
+              ),
+            )
           ) : (
             <></>
           )}
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#1c1e21',
     flex: 1,
-    marginTop: 10,
+    marginTop: 15,
     paddingHorizontal: 15,
   },
   biography: {

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import {useAppSelector} from '../../app/hooks';
+import {useAppSelector} from '../../app/helpers';
 import CharacterProfile from '../../components/CharacterProfile/CharacterProfile';
 import PowerStats from '../../components/SuperheroCard/PowerStats/PowerStats';
 import styles from './styles';

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../app/helpers';
 import {addSuperhero, openModal} from '../../app/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import PowerStats from './PowerStats/PowerStats';
@@ -16,7 +16,11 @@ import PowerStats from './PowerStats/PowerStats';
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
   const dispatch = useAppDispatch();
   const {myTeam} = useAppSelector(state => state.superheros);
-  const verifyTeam = myTeam.ids.indexOf(character.id);
+  const verifyTeam = myTeam.ids.includes(character.id);
+  const verifyGoods = myTeam.goods.includes(null);
+  const verifyBads = myTeam.bads.includes(null);
+  const verifyAligment =
+    character.biography.alignment === 'bad' ? verifyBads : verifyGoods;
   return (
     <Pressable
       style={styles.container}
@@ -36,11 +40,18 @@ const SuperheroCard: FC<{character: Result}> = ({character}) => {
         <PowerStats powerstats={character.powerstats} />
       </View>
 
-      {verifyTeam === -1 && (
+      {!verifyTeam && verifyAligment && (
         <TouchableOpacity
           style={styles.addCharacter}
           onPress={() => dispatch(addSuperhero(character))}>
           <Icon name="plussquare" size={50} color="green" />
+        </TouchableOpacity>
+      )}
+      {verifyTeam && (
+        <TouchableOpacity
+          style={styles.characterAdded}
+          onPress={() => dispatch(addSuperhero(character))}>
+          <Icon name="checkcircle" size={50} color="green" />
         </TouchableOpacity>
       )}
     </Pressable>
@@ -86,6 +97,11 @@ const styles = StyleSheet.create({
   addCharacter: {
     justifyContent: 'center',
     paddingHorizontal: 8,
+  },
+  characterAdded: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    opacity: 0.5,
   },
 });
 

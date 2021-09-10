@@ -22,7 +22,7 @@ const CharacterProfile: FC<{
 };
 export const styles = StyleSheet.create({
   profileContainer: {
-    marginHorizontal: 2,
+    margin: 5,
   },
   picture: {
     top: 5,

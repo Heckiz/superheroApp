@@ -1,6 +1,6 @@
 import React, {Dispatch, FC, useEffect, useState} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {useAppDispatch} from '../../app/hooks';
+import {useAppDispatch} from '../../app/helpers';
 import {fetchSuperheros} from '../../app/superheroSlice';
 import useDebounce from '../../hooks/useDebounce';
 
@@ -15,7 +15,6 @@ const SearchBar: FC<{
 
   useEffect(() => {
     dispatch(fetchSuperheros(`search/${debouncedSearchTerm}`));
-    console.log('ready');
   }, [debouncedSearchTerm, dispatch]);
 
   return (
@@ -37,8 +36,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     color: 'white',
     fontSize: 20,
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
 });
 
