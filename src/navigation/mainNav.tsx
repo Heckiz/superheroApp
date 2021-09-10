@@ -1,11 +1,15 @@
 import React, {FC} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import AppStack from './tabs/appTabs';
+import AppTabs from './tabs/appTabs';
+import {useAppSelector} from '../hooks/store';
+import AuthStack from './stacks/authStack';
 
 const MainNav: FC = () => {
+  const {logged} = useAppSelector(state => state.auth);
+  console.log(logged);
   return (
     <NavigationContainer>
-      <AppStack />
+      {!logged ? <AuthStack /> : <AppTabs />}
     </NavigationContainer>
   );
 };

@@ -17,7 +17,6 @@ export const store = configureStore({
     superheros: persistedSuperheros,
     auth: persistedAuth,
   },
-
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

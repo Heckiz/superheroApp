@@ -1,4 +1,5 @@
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -11,3 +12,4 @@ export type RootStackParamList = {
 };
 
 export type Props = BottomTabScreenProps<RootTabParamList, 'SearchSuperhero'>;
+export type AuthProps = NativeStackScreenProps<RootStackParamList, 'Register'>;
