@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import axios from 'axios';
-import {Result} from '../interfaces/superheros';
+import {Result} from '../../../interfaces/superheros';
 import {addPowerstats, initialState} from './helpers';
-import {AppDispatch, RootState} from './store';
+import {AppDispatch, RootState} from '../../store';
 
 export const fetchSuperheros = createAsyncThunk<
   Result[],
@@ -24,7 +24,7 @@ export const fetchSuperheros = createAsyncThunk<
 });
 
 const superheroSlice = createSlice({
-  name: 'userList',
+  name: 'superhero',
   initialState: initialState,
   reducers: {
     addSuperhero({myTeam}, action: PayloadAction<Result>) {

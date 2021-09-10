@@ -1,12 +1,12 @@
 import React, {FC, useState} from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
-import {useAppSelector} from '../../app/helpers';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SuperherCard from '../../components/SuperheroCard/SuperheroCard';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import RandomList from '../../components/RandomList/RandomList';
 import DetailModal from '../../components/DetailModal/DetailModal';
+import {useAppSelector} from '../../hooks/store';
 
 const SearchSuperhero: FC = () => {
   const [searching, setSearching] = useState<boolean>(false);

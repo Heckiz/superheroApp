@@ -5,4 +5,9 @@ export type RootTabParamList = {
   SearchSuperhero: undefined;
 };
 
+export type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
+
 export type Props = BottomTabScreenProps<RootTabParamList, 'SearchSuperhero'>;

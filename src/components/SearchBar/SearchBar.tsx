@@ -1,7 +1,7 @@
 import React, {Dispatch, FC, useEffect, useState} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {useAppDispatch} from '../../app/helpers';
-import {fetchSuperheros} from '../../app/superheroSlice';
+import {fetchSuperheros} from '../../app/slices/superheros/superheroSlice';
+import {useAppDispatch} from '../../hooks/store';
 import useDebounce from '../../hooks/useDebounce';
 
 const SearchBar: FC<{

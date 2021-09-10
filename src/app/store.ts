@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
-import superherosReducer from './superheroSlice';
+import superherosReducer from './slices/superheros/superheroSlice';
+import authReducer from './slices/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
 import {PERSIST} from 'redux-persist/es/constants';
@@ -8,12 +9,15 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
-const persistedReducer = persistReducer(persistConfig, superherosReducer);
+const persistedSuperheros = persistReducer(persistConfig, superherosReducer);
+const persistedAuth = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    superheros: persistedReducer,
+    superheros: persistedSuperheros,
+    auth: persistedAuth,
   },
+
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

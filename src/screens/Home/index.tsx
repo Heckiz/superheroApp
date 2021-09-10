@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
-import {useAppSelector} from '../../app/helpers';
 import CharacterProfile from '../../components/CharacterProfile/CharacterProfile';
 import PowerStats from '../../components/SuperheroCard/PowerStats/PowerStats';
+import {useAppSelector} from '../../hooks/store';
 import styles from './styles';
 const Home: FC = () => {
   const {myTeam} = useAppSelector(state => state.superheros);

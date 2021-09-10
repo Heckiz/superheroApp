@@ -1,9 +1,4 @@
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {Powerstats, Result} from '../interfaces/superheros';
-import type {RootState, AppDispatch} from './store';
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import {Powerstats, Result} from '../../../interfaces/superheros';
 
 export interface DataState {
   superheros: Result[];
@@ -20,6 +15,10 @@ export interface DataState {
   };
   loading: boolean;
   error: boolean;
+  user: {
+    logged: boolean;
+    token: string | null;
+  };
 }
 
 export const initialState: DataState = {
@@ -41,6 +40,10 @@ export const initialState: DataState = {
   },
   loading: false,
   error: true,
+  user: {
+    logged: false,
+    token: null,
+  },
 };
 
 export const addPowerstats = (myStats: Powerstats, newStats: Powerstats) => {

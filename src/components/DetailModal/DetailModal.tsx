@@ -9,11 +9,11 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {useAppDispatch} from '../../app/helpers';
-import {closeModal} from '../../app/superheroSlice';
+import {closeModal} from '../../app/slices/superheros/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import Icon from 'react-native-vector-icons/AntDesign';
 import CharacterProfile from '../CharacterProfile/CharacterProfile';
+import {useAppDispatch} from '../../hooks/store';
 
 const DetailModal: FC<{modalVisible: boolean; character: Result | null}> = ({
   modalVisible,

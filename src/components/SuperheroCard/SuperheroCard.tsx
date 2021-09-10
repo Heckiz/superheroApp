@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {useAppDispatch, useAppSelector} from '../../app/helpers';
-import {addSuperhero, openModal} from '../../app/superheroSlice';
+import {
+  addSuperhero,
+  openModal,
+} from '../../app/slices/superheros/superheroSlice';
+import {useAppDispatch, useAppSelector} from '../../hooks/store';
 import {Result} from '../../interfaces/superheros';
 import PowerStats from './PowerStats/PowerStats';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
   const dispatch = useAppDispatch();
