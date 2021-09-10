@@ -39,12 +39,15 @@ const DetailModal: FC<{modalVisible: boolean; character: Result | null}> = ({
           source={{uri: character?.image.url}}
         />
 
-        <Pressable onPress={() => dispatch(closeModal())}>
+        <Pressable
+          style={styles.profileContainer}
+          onPress={() => dispatch(closeModal())}>
           <CharacterProfile
             uri={character?.image.url}
             name={character?.name}
             width={250}
             height={250}
+            fontSize={26}
           />
         </Pressable>
 
@@ -86,10 +89,13 @@ const styles = StyleSheet.create({
   },
   backgroundTop: {
     width: '100%',
-    height: '50%',
+    height: '55%',
     position: 'absolute',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  profileContainer: {
+    top: 10,
   },
   dataContainer: {
     width: '100%',

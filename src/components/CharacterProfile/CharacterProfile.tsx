@@ -6,27 +6,30 @@ const CharacterProfile: FC<{
   name: string | undefined;
   width: number;
   height: number;
-}> = ({uri, name, width, height}) => {
+  fontSize: number;
+}> = ({uri, name, width, height, fontSize}) => {
   return (
-    <View>
+    <View style={styles.profileContainer}>
       <Image
         style={[styles.picture, {width: width, height: height}]}
         source={{uri: uri}}
       />
-      <Text style={styles.nameTitle}>{name}</Text>
+      <Text style={[styles.nameTitle, {width: width, fontSize: fontSize}]}>
+        {name}
+      </Text>
     </View>
   );
 };
 export const styles = StyleSheet.create({
+  profileContainer: {
+    marginHorizontal: 2,
+  },
   picture: {
-    top: 10,
+    top: 5,
     borderRadius: 5,
     zIndex: 1,
-    alignItems: 'center',
   },
   nameTitle: {
-    bottom: 10,
-    fontSize: 28,
     fontFamily: 'monospace',
     fontWeight: 'bold',
     textAlign: 'center',

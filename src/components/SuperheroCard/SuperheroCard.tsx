@@ -1,13 +1,22 @@
 import React, {FC} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {useAppDispatch} from '../../app/hooks';
-import {openModal} from '../../app/superheroSlice';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {addSuperhero, openModal} from '../../app/superheroSlice';
 import {Result} from '../../interfaces/superheros';
 import PowerStats from './PowerStats/PowerStats';
 
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
   const dispatch = useAppDispatch();
-
+  const {myTeam} = useAppSelector(state => state.superheros);
+  const verifyTeam = myTeam.ids.indexOf(character.id);
   return (
     <Pressable
       style={styles.container}
@@ -26,6 +35,14 @@ const SuperheroCard: FC<{character: Result}> = ({character}) => {
       <View style={styles.info}>
         <PowerStats powerstats={character.powerstats} />
       </View>
+
+      {verifyTeam === -1 && (
+        <TouchableOpacity
+          style={styles.addCharacter}
+          onPress={() => dispatch(addSuperhero(character))}>
+          <Icon name="plussquare" size={50} color="green" />
+        </TouchableOpacity>
+      )}
     </Pressable>
   );
 };
@@ -65,6 +82,10 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1.7,
+  },
+  addCharacter: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
   },
 });
 
