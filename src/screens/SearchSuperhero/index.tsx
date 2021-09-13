@@ -1,9 +1,7 @@
 import React, {FC, useState} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SuperherCard from '../../components/SuperheroCard/SuperheroCard';
-import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
 import RandomList from '../../components/RandomList/RandomList';
 import DetailModal from '../../components/DetailModal/DetailModal';
 import {useAppSelector} from '../../hooks/store';
@@ -15,12 +13,11 @@ const SearchSuperhero: FC = () => {
   );
   return (
     <>
-      <TouchableOpacity style={styles.searchBar}>
-        <Icon name="search1" size={28} color="white" />
-
-        <SearchBar placeholder="Search Superhero" setSearching={setSearching} />
-        {loading && <Icon name="loading1" size={28} color="white" />}
-      </TouchableOpacity>
+      <SearchBar
+        placeholder="Search Superhero"
+        setSearching={setSearching}
+        loading={loading}
+      />
 
       {!searching ? (
         <RandomList />
