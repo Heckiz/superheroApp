@@ -8,6 +8,7 @@ export interface DataState {
   };
   modal: {visible: boolean; character: Result | null};
   myTeam: {
+    editable: boolean;
     ids: string[];
     goods: [Result | null, Result | null, Result | null];
     bads: [Result | null, Result | null, Result | null];
@@ -26,6 +27,7 @@ export const initialState: DataState = {
   randomSuperheros: {ids: [], list: []},
   modal: {visible: false, character: null},
   myTeam: {
+    editable: false,
     ids: [],
     goods: [null, null, null],
     bads: [null, null, null],
@@ -46,15 +48,37 @@ export const initialState: DataState = {
   },
 };
 
-export const addPowerstats = (myStats: Powerstats, newStats: Powerstats) => {
+type handleOption = 'add' | 'remove';
+
+export const handlePowerstats = (
+  myStats: Powerstats,
+  newStats: Powerstats,
+  operatorParam: handleOption,
+) => {
   const {combat, durability, intelligence, power, speed, strength} = newStats;
 
-  myStats.combat = '' + (+myStats.combat + (+combat ? +combat : 0));
-  myStats.durability =
-    '' + (+myStats.durability + (+durability ? +durability : 0));
-  myStats.intelligence =
-    '' + (+myStats.intelligence + (+intelligence ? +intelligence : 0));
-  myStats.power = '' + (+myStats.power + (+power ? +power : 0));
-  myStats.speed = '' + (+myStats.speed + (+speed ? +speed : 0));
-  myStats.strength = '' + (+myStats.strength + (+strength ? +strength : 0));
+  const addStats = (oldValue: number, newValue: number) => {
+    return '' + (oldValue + newValue);
+  };
+  const removeStats = (oldValue: number, newValue: number) => {
+    return '' + (oldValue - newValue);
+  };
+
+  const handleOperator = operatorParam === 'add' ? addStats : removeStats;
+
+  myStats.combat = handleOperator(+myStats.combat, +combat ? +combat : 0);
+  myStats.durability = handleOperator(
+    +myStats.durability,
+    +durability ? +durability : 0,
+  );
+  myStats.intelligence = handleOperator(
+    +myStats.intelligence,
+    +intelligence ? +intelligence : 0,
+  );
+  myStats.power = handleOperator(+myStats.power, +power ? +power : 0);
+  myStats.speed = handleOperator(+myStats.speed, +speed ? +speed : 0);
+  myStats.strength = handleOperator(
+    +myStats.strength,
+    +strength ? +strength : 0,
+  );
 };

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {Result} from '../../../interfaces/superheros';
-import {addPowerstats, initialState} from './helpers';
+import {handlePowerstats, initialState} from './helpers';
 import {AppDispatch, RootState} from '../../store';
 
 export const fetchSuperheros = createAsyncThunk<
@@ -27,22 +27,38 @@ const superheroSlice = createSlice({
   name: 'superhero',
   initialState: initialState,
   reducers: {
+    switchEditable({myTeam}) {
+      myTeam.editable = !myTeam.editable;
+    },
+    removeCharacter({myTeam}, action: PayloadAction<Result>) {
+      const {id, biography, powerstats} = action.payload;
+      myTeam.ids = myTeam.ids.filter(slotId => {
+        return id !== slotId;
+      });
+
+      const team = biography.alignment === 'good' ? myTeam.goods : myTeam.bads;
+      team.forEach((character, index) => {
+        if (character?.id === id) {
+          team[index] = null;
+        }
+      });
+      handlePowerstats(myTeam.totalStats, powerstats, 'remove');
+    },
+    editTeam({myTeam}) {
+      myTeam.editable = !myTeam.editable;
+    },
     addSuperhero({myTeam}, action: PayloadAction<Result>) {
       const {goods, bads, ids, totalStats} = myTeam;
-      const {alignment} = action.payload.biography;
-      const {powerstats} = action.payload;
+      const {powerstats, biography} = action.payload;
 
       const indexGood = goods.indexOf(null);
       const indexBad = bads.indexOf(null);
-      if (alignment === 'good' && indexGood !== -1) {
-        goods[indexGood] = action.payload;
+      if (indexGood !== -1) {
+        biography.alignment === 'good'
+          ? (goods[indexGood] = action.payload)
+          : (bads[indexBad] = action.payload);
         ids.push(action.payload.id);
-        addPowerstats(totalStats, powerstats);
-      }
-      if (alignment === 'bad' && indexBad !== -1) {
-        bads[indexBad] = action.payload;
-        ids.push(action.payload.id);
-        addPowerstats(totalStats, powerstats);
+        handlePowerstats(totalStats, powerstats, 'add');
       }
     },
     addRandomSuperheros({randomSuperheros}, action: PayloadAction<Result>) {
@@ -88,5 +104,8 @@ export const {
   openModal,
   closeModal,
   addSuperhero,
+  editTeam,
+  removeCharacter,
+  switchEditable,
 } = superheroSlice.actions;
 export default superheroSlice.reducer;

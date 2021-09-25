@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   textValue: {
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: 'monospace',
     color: 'teal',
     fontWeight: 'bold',
