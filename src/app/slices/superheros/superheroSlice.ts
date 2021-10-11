@@ -16,7 +16,8 @@ export const fetchSuperheros = createAsyncThunk<
     return data.results;
   } else {
     const {randomSuperheros} = getState().superheros;
-    randomSuperheros.list.length === 6
+    (randomSuperheros.listOne.length === 6 && !randomSuperheros.switchList) ||
+    (randomSuperheros.listTwo.length === 6 && randomSuperheros.switchList)
       ? dispatch(cleanRandomSuperheros()) && dispatch(addRandomSuperheros(data))
       : dispatch(addRandomSuperheros(data));
     return data;
@@ -62,11 +63,24 @@ const superheroSlice = createSlice({
       }
     },
     addRandomSuperheros({randomSuperheros}, action: PayloadAction<Result>) {
-      randomSuperheros.list.unshift(action.payload);
-      randomSuperheros.ids.unshift(action.payload.id);
+      const {listOne, listTwo, switchList, ids} = randomSuperheros;
+
+      if (!switchList) {
+        listOne.unshift(action.payload);
+        randomSuperheros.switchList = !switchList;
+      } else {
+        listTwo.unshift(action.payload);
+        randomSuperheros.switchList = !switchList;
+      }
+      ids.push(action.payload.id);
     },
     cleanRandomSuperheros({randomSuperheros}) {
-      randomSuperheros.list.pop();
+      randomSuperheros.listOne.pop();
+      if (!randomSuperheros.switchList) {
+        randomSuperheros.listOne.pop();
+      } else {
+        randomSuperheros.listTwo.pop();
+      }
       randomSuperheros.ids.pop();
     },
     openModal({modal}, action: PayloadAction<Result>) {

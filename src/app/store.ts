@@ -3,7 +3,7 @@ import superherosReducer from './slices/superheros/superheroSlice';
 import authReducer from './slices/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
-import {PERSIST} from 'redux-persist/es/constants';
+import {FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from 'redux-persist';
 
 const persistConfig = {
   key: 'root',
@@ -20,8 +20,9 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [PERSIST],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
+      immutableCheck: false,
     }),
 });
 

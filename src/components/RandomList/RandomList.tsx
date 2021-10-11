@@ -21,13 +21,22 @@ const RandomList: FC = () => {
     },
     modal.visible ? null : 4000,
   );
-
   return (
-    <FlatList
-      data={randomSuperheros.list}
-      renderItem={({item}) => <SuperheroCard character={item} />}
-      keyExtractor={item => item.id}
-    />
+    <>
+      <FlatList
+        horizontal
+        inverted
+        data={randomSuperheros.listOne}
+        renderItem={({item}) => <SuperheroCard character={item} />}
+        keyExtractor={item => item.id}
+      />
+      <FlatList
+        horizontal
+        data={randomSuperheros.listTwo}
+        renderItem={({item}) => <SuperheroCard character={item} />}
+        keyExtractor={item => item.id}
+      />
+    </>
   );
 };
 

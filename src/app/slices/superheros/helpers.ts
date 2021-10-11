@@ -4,7 +4,9 @@ export interface DataState {
   superheros: Result[];
   randomSuperheros: {
     ids: string[];
-    list: Result[];
+    switchList: boolean;
+    listOne: Result[];
+    listTwo: Result[];
   };
   modal: {visible: boolean; character: Result | null};
   myTeam: {
@@ -24,7 +26,7 @@ export interface DataState {
 
 export const initialState: DataState = {
   superheros: [],
-  randomSuperheros: {ids: [], list: []},
+  randomSuperheros: {ids: [], switchList: false, listOne: [], listTwo: []},
   modal: {visible: false, character: null},
   myTeam: {
     editable: false,

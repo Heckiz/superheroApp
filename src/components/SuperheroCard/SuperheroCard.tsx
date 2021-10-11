@@ -12,7 +12,6 @@ import CharacterProfile from '../CharacterProfile/CharacterProfile';
 
 const SuperheroCard: FC<{character: Result}> = ({character}) => {
   const dispatch = useAppDispatch();
-
   const fadeAnim = useRef(new Animated.Value(0)).current;
   (() =>
     Animated.timing(fadeAnim, {
@@ -125,8 +124,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   info: {
-    flex: 2.5,
-    flexDirection: 'row',
+    flex: 2,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 6,
