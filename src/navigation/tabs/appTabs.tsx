@@ -10,7 +10,10 @@ import Profile from '../../screens/Profile';
 const {Navigator, Screen} = createBottomTabNavigator<RootTabParamList>();
 
 const AppTabs: FC = () => {
-  const {ids} = useAppSelector(state => state.superheros.myTeam);
+  const {myTeams} = useAppSelector(state => state.superheros);
+  const {teamSelected} = myTeams;
+
+  const {ids} = myTeams[teamSelected];
 
   const badge = ids.length === 6 ? 'FULL' : `${ids.length}/6`;
   return (

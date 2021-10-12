@@ -50,6 +50,15 @@ const styles = StyleSheet.create({
     top: 1,
     right: 0,
   },
+  picker: {
+    marginVertical: 20,
+    backgroundColor: '#3095A3',
+    width: '100%',
+  },
+  pickerItem: {
+    backgroundColor: '#30A39C',
+    color: 'white',
+  },
 });
 
 export default styles;

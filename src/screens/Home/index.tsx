@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {
+  changeTeam,
   removeCharacter,
   switchEditable,
 } from '../../app/slices/superheros/superheroSlice';
@@ -9,17 +10,23 @@ import CharacterProfile from '../../components/CharacterProfile/CharacterProfile
 import PowerStats from '../../components/SuperheroCard/PowerStats/PowerStats';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
 import styles from './styles';
-const Home: FC = () => {
-  const {myTeam} = useAppSelector(state => state.superheros);
+import {Picker} from '@react-native-picker/picker';
 
+const Home: FC = () => {
+  const {myTeams} = useAppSelector(state => state.superheros);
+
+  const {teamSelected} = myTeams;
+
+  const team = myTeams[teamSelected];
+  console.log('teamSelected:', teamSelected);
   const dispatch = useAppDispatch();
 
   return (
     <View>
       <View style={styles.charactersList}>
-        {myTeam.goods.map((character, index) => (
+        {team.goods.map((character, index) => (
           <View key={`good${index}`}>
-            {character && myTeam.editable && (
+            {character && myTeams.editable && (
               <TouchableOpacity
                 onPress={() =>
                   character && dispatch(removeCharacter(character))
@@ -45,9 +52,9 @@ const Home: FC = () => {
       </View>
 
       <View style={styles.charactersList}>
-        {myTeam.bads.map((character, index) => (
+        {team.bads.map((character, index) => (
           <View key={`bad${index}`}>
-            {character && myTeam.editable && (
+            {character && myTeams.editable && (
               <TouchableOpacity
                 onPress={() =>
                   character && dispatch(removeCharacter(character))
@@ -75,17 +82,39 @@ const Home: FC = () => {
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={styles.title}>Total Stats</Text>
-          <PowerStats powerstats={myTeam.totalStats} />
+          <PowerStats powerstats={team.totalStats} />
         </View>
         <View style={styles.options}>
           <TouchableOpacity
             onPress={() => dispatch(switchEditable())}
             style={[
               styles.optionButton,
-              myTeam.editable && styles.buttonSelected,
+              myTeams.editable && styles.buttonSelected,
             ]}>
             <Icon name="edit" size={35} />
           </TouchableOpacity>
+          <Picker
+            dropdownIconColor="white"
+            dropdownIconRippleColor="white"
+            style={styles.picker}
+            selectedValue={teamSelected}
+            onValueChange={itemValue => dispatch(changeTeam(itemValue))}>
+            <Picker.Item
+              style={styles.pickerItem}
+              label="Team A"
+              value="teamA"
+            />
+            <Picker.Item
+              style={styles.pickerItem}
+              label="Team B"
+              value="teamB"
+            />
+            <Picker.Item
+              style={styles.pickerItem}
+              label="Team C"
+              value="teamC"
+            />
+          </Picker>
         </View>
       </View>
     </View>

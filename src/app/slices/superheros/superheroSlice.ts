@@ -28,28 +28,34 @@ const superheroSlice = createSlice({
   name: 'superhero',
   initialState: initialState,
   reducers: {
-    switchEditable({myTeam}) {
-      myTeam.editable = !myTeam.editable;
+    changeTeam({myTeams}, action: PayloadAction<'teamA' | 'teamB' | 'teamC'>) {
+      myTeams.teamSelected = action.payload;
     },
-    removeCharacter({myTeam}, action: PayloadAction<Result>) {
+    switchEditable({myTeams}) {
+      myTeams.editable = !myTeams.editable;
+    },
+    removeCharacter({myTeams}, action: PayloadAction<Result>) {
+      const {teamSelected} = myTeams;
+      const team = myTeams[teamSelected];
+
       const {id, biography, powerstats} = action.payload;
-      myTeam.ids = myTeam.ids.filter(slotId => {
+
+      team.ids = team.ids.filter(slotId => {
         return id !== slotId;
       });
 
-      const team = biography.alignment === 'good' ? myTeam.goods : myTeam.bads;
-      team.forEach((character, index) => {
+      const slot = biography.alignment === 'good' ? team.goods : team.bads;
+      slot.forEach((character, index) => {
         if (character?.id === id) {
-          team[index] = null;
+          slot[index] = null;
         }
       });
-      handlePowerstats(myTeam.totalStats, powerstats, 'remove');
+      handlePowerstats(team.totalStats, powerstats, 'remove');
     },
-    editTeam({myTeam}) {
-      myTeam.editable = !myTeam.editable;
-    },
-    addSuperhero({myTeam}, action: PayloadAction<Result>) {
-      const {goods, bads, ids, totalStats} = myTeam;
+    addSuperhero({myTeams}, action: PayloadAction<Result>) {
+      const {teamSelected} = myTeams;
+      const team = myTeams[teamSelected];
+      const {goods, bads, totalStats} = team;
       const {powerstats, biography} = action.payload;
 
       const indexGood = goods.indexOf(null);
@@ -58,7 +64,7 @@ const superheroSlice = createSlice({
         biography.alignment === 'good'
           ? (goods[indexGood] = action.payload)
           : (bads[indexBad] = action.payload);
-        ids.push(action.payload.id);
+        team.ids.push(action.payload.id);
         handlePowerstats(totalStats, powerstats, 'add');
       }
     },
@@ -118,8 +124,8 @@ export const {
   openModal,
   closeModal,
   addSuperhero,
-  editTeam,
   removeCharacter,
   switchEditable,
+  changeTeam,
 } = superheroSlice.actions;
 export default superheroSlice.reducer;

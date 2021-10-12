@@ -26,11 +26,14 @@ const SuperheroCard: FC<{character: Result}> = ({character}) => {
       toValue: 1,
     }).start())();
 
-  const {myTeam} = useAppSelector(state => state.superheros);
+  const {myTeams} = useAppSelector(state => state.superheros);
 
-  const verifyTeam = myTeam.ids.includes(character.id);
-  const verifyGoods = myTeam.goods.includes(null);
-  const verifyBads = myTeam.bads.includes(null);
+  const {teamSelected} = myTeams;
+  const team = myTeams[teamSelected];
+
+  const verifyTeam = team.ids.includes(character.id);
+  const verifyGoods = team.goods.includes(null);
+  const verifyBads = team.bads.includes(null);
 
   let borderColor: string = '',
     backgroundColor: string = '',
