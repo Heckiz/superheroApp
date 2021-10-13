@@ -17,7 +17,7 @@ export const initialTeam: Team = {
 
 export const initialState: DataState = {
   superheros: [],
-  randomSuperheros: {ids: [], switchList: false, listOne: [], listTwo: []},
+  randomSuperheros: {ids: [], list: []},
   modal: {visible: false, character: null},
   myTeams: {
     editable: false,

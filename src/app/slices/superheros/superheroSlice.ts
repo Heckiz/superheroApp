@@ -16,8 +16,7 @@ export const fetchSuperheros = createAsyncThunk<
     return data.results;
   } else {
     const {randomSuperheros} = getState().superheros;
-    (randomSuperheros.listOne.length === 6 && !randomSuperheros.switchList) ||
-    (randomSuperheros.listTwo.length === 6 && randomSuperheros.switchList)
+    randomSuperheros.list.length === 6
       ? dispatch(cleanRandomSuperheros()) && dispatch(addRandomSuperheros(data))
       : dispatch(addRandomSuperheros(data));
     return data;
@@ -69,25 +68,16 @@ const superheroSlice = createSlice({
       }
     },
     addRandomSuperheros({randomSuperheros}, action: PayloadAction<Result>) {
-      const {listOne, listTwo, switchList, ids} = randomSuperheros;
+      const {list, ids} = randomSuperheros;
 
-      if (!switchList) {
-        listOne.unshift(action.payload);
-        randomSuperheros.switchList = !switchList;
-      } else {
-        listTwo.unshift(action.payload);
-        randomSuperheros.switchList = !switchList;
-      }
-      ids.push(action.payload.id);
+      list.unshift(action.payload);
+      ids.unshift(action.payload.id);
     },
     cleanRandomSuperheros({randomSuperheros}) {
-      randomSuperheros.listOne.pop();
-      if (!randomSuperheros.switchList) {
-        randomSuperheros.listOne.pop();
-      } else {
-        randomSuperheros.listTwo.pop();
-      }
-      randomSuperheros.ids.pop();
+      const {list, ids} = randomSuperheros;
+
+      list.pop();
+      ids.pop();
     },
     openModal({modal}, action: PayloadAction<Result>) {
       modal.visible = true;

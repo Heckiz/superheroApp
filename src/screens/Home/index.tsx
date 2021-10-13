@@ -7,7 +7,7 @@ import {
   switchEditable,
 } from '../../app/slices/superheros/superheroSlice';
 import CharacterProfile from '../../components/CharacterProfile/CharacterProfile';
-import PowerStats from '../../components/SuperheroCard/PowerStats/PowerStats';
+import PowerStats from '../../components/PowerStats/PowerStats';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
 import styles from './styles';
 import {Picker} from '@react-native-picker/picker';
@@ -18,7 +18,7 @@ const Home: FC = () => {
   const {teamSelected} = myTeams;
 
   const team = myTeams[teamSelected];
-  console.log('teamSelected:', teamSelected);
+
   const dispatch = useAppDispatch();
 
   return (
@@ -82,7 +82,11 @@ const Home: FC = () => {
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={styles.title}>Total Stats</Text>
-          <PowerStats powerstats={team.totalStats} />
+          <PowerStats
+            powerstats={team.totalStats}
+            total={true}
+            herosCount={team.ids.length}
+          />
         </View>
         <View style={styles.options}>
           <TouchableOpacity

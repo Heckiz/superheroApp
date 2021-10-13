@@ -9,7 +9,6 @@ const RandomList: FC = () => {
   const dispatch = useAppDispatch();
 
   const {randomSuperheros, modal} = useAppSelector(state => state.superheros);
-
   useInterval(
     () => {
       const numberRandom: string = (
@@ -24,15 +23,7 @@ const RandomList: FC = () => {
   return (
     <>
       <FlatList
-        horizontal
-        inverted
-        data={randomSuperheros.listOne}
-        renderItem={({item}) => <SuperheroCard character={item} />}
-        keyExtractor={item => item.id}
-      />
-      <FlatList
-        horizontal
-        data={randomSuperheros.listTwo}
+        data={randomSuperheros.list}
         renderItem={({item}) => <SuperheroCard character={item} />}
         keyExtractor={item => item.id}
       />

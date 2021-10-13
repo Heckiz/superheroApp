@@ -11,9 +11,7 @@ export interface DataState {
   superheros: Result[];
   randomSuperheros: {
     ids: string[];
-    switchList: boolean;
-    listOne: Result[];
-    listTwo: Result[];
+    list: Result[];
   };
   modal: {visible: boolean; character: Result | null};
   myTeams: {

@@ -1,9 +1,13 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Powerstats} from '../../../interfaces/superheros';
+import {Powerstats} from '../../interfaces/superheros';
 
-const PowerStats: FC<{powerstats: Powerstats}> = ({powerstats}) => {
+const PowerStats: FC<{
+  powerstats: Powerstats;
+  total: boolean;
+  herosCount: number;
+}> = ({powerstats, total, herosCount}) => {
   const iconsParam: any = {
     intelligence: 'brain',
     strength: 'fist-raised',
@@ -40,15 +44,19 @@ const PowerStats: FC<{powerstats: Powerstats}> = ({powerstats}) => {
             <Icon
               style={styles.icon}
               name={
-                value > 80
+                (total ? value / herosCount : value) > 80
                   ? 'arrow-up'
-                  : value > 40
+                  : (total ? value / herosCount : value) > 40
                   ? 'arrow-right'
                   : 'arrow-down'
               }
               size={15}
               color={
-                value > 80 ? '#228b22' : value > 40 ? '#daa520' : '#dc143c'
+                (total ? value / herosCount : value) > 80
+                  ? '#228b22'
+                  : (total ? value / herosCount : value) > 40
+                  ? '#daa520'
+                  : '#dc143c'
               }
             />
           </View>

@@ -6,7 +6,7 @@ import {
 } from '../../app/slices/superheros/superheroSlice';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
 import {Result} from '../../interfaces/superheros';
-import PowerStats from './PowerStats/PowerStats';
+import PowerStats from '../PowerStats/PowerStats';
 import Icon from 'react-native-vector-icons/AntDesign';
 import CharacterProfile from '../CharacterProfile/CharacterProfile';
 
@@ -65,7 +65,11 @@ const SuperheroCard: FC<{character: Result}> = ({character}) => {
         </View>
 
         <View style={[styles.info, {borderColor: borderColor}]}>
-          <PowerStats powerstats={character.powerstats} />
+          <PowerStats
+            powerstats={character.powerstats}
+            total={true}
+            herosCount={1}
+          />
 
           <View style={styles.addCharacter}>
             {!verifyTeam && verifyAligment && (
